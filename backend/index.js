@@ -6,6 +6,7 @@ require("dotenv").config();
 
 const UserGoal = require("./models/UserGoals");
 console.log("UserGoal schema timeline type:", UserGoal.schema.path('timeline').instance);
+const generateRoadmap = require("./services/geminiService");
 
 const app = express();
 app.use(cors());
@@ -38,6 +39,18 @@ app.get("/api/user-goal", async (req, res) => {
     res.status(200).json(goals);
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch goals" });
+  }
+});
+
+app.post("/api/generate-roadmap", async (req, res) => {
+  const { goal, level, timeline } = req.body;
+
+  try {
+    const roadmap = await generateRoadmap(goal, level, timeline);
+    res.status(200).json({ roadmap });
+  } catch (error) {
+    console.error("Error generating roadmap:", error.message);
+    res.status(500).json({ error: "Failed to generate roadmap" });
   }
 });
 
