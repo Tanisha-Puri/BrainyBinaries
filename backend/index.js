@@ -54,6 +54,22 @@ app.post("/api/generate-roadmap", async (req, res) => {
   }
 });
 
+app.get("/api/generate-roadmap/:goalId", async (req, res) => {
+  const { goalId } = req.params;
+  try {
+    const userGoal = await UserGoal.findById(goalId);
+    if (!userGoal) {
+      return res.status(404).json({ error: "User goal not found" });
+    }
+    const { goal, level, timeline } = userGoal;
+    const roadmap = await generateRoadmap(goal, level, timeline);
+    res.status(200).json({ roadmap });
+  } catch (error) {
+    console.error("Error generating roadmap from saved goal:", error);
+    res.status(500).json({ error: "Failed to generate roadmap" });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
