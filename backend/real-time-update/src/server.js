@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
@@ -7,10 +8,12 @@ const { setupSockets } = require('./sockets/socketHandler');
 require('dotenv').config();
 
 const app = express();
+const cors = require('cors');
 const server = http.createServer(app);
 const io = new Server(server);
 
 app.use(express.json());
+app.use(cors());
 app.use((req, res, next) => {
   req.io = io;
   next();
