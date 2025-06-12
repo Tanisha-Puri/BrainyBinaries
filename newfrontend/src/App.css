@@ -1,3 +1,11 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--linkedin-bg);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .App {
   text-align: center;
 }
@@ -14,15 +22,10 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background-color: var(--linkedin-bg);
+  color: var(--linkedin-text);
 }
+
 
 .App-link {
   color: #61dafb;
@@ -36,3 +39,12 @@
     transform: rotate(360deg);
   }
 }
+
+html, body, #root, .App {
+  height: 100%;
+  background-color: var(--linkedin-bg);
+  font-family: var(--font);
+  margin: 0;
+  padding: 0;
+}
+

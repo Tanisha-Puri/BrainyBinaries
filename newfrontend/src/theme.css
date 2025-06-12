@@ -1,0 +1,48 @@
+:root {
+  --linkedin-blue: #0A66C2;
+  --linkedin-dark: #004182;
+  --linkedin-bg: #F3F2EF;
+  --linkedin-text: #1D2226;
+  --font: system-ui, Helvetica, Arial, sans-serif;
+  --radius: 4px;
+  --shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font);
+  background-color: var(--linkedin-bg);
+  color: var(--linkedin-text);
+}
+
+.card {
+  background-color: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.button-primary {
+  background-color: var(--linkedin-blue);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.button-primary:hover {
+  background-color: var(--linkedin-dark);
+}
+
+.input-field {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  width: 100%;
+  font-size: 14px;
+}
