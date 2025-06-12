@@ -52,6 +52,31 @@
     width: 100%;
     height: 100%;
   }
+  .roadmap-markdown {
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
+  line-height: 1.6;
+}
+
+.roadmap-markdown h2,
+.roadmap-markdown h3 {
+  color: #333;
+  margin-top: 1rem;
+}
+
+.roadmap-markdown ul {
+  padding-left: 1.5rem;
+}
+
+.roadmap-markdown li {
+  margin-bottom: 0.5rem;
+}
+
+.roadmap-markdown strong {
+  color: #007acc;
+}
+
   
   .info-section {
     flex: 1;
