@@ -1,7 +1,7 @@
-
 import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
 import '../styles/RoadmapDisplay.css';
 
 function RoadmapDisplay() {
@@ -11,15 +11,26 @@ function RoadmapDisplay() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const roadmapFromState = location.state?.roadmap;
+    const goalId = location.state?.goalId; // goalId should be passed from previous route
 
-    if (!roadmapFromState) {
-      // If roadmap data is missing, redirect to home
+    if (!goalId) {
       navigate('/');
-    } else {
-      setRoadmapText(roadmapFromState);
-      setLoading(false);
+      return;
     }
+
+    const fetchRoadmap = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/generate-roadmap/${goalId}`);
+        setRoadmapText(response.data.roadmap);
+      } catch (error) {
+        console.error("Error fetching roadmap:", error);
+        navigate('/');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRoadmap();
   }, [location.state, navigate]);
 
   if (loading) {
@@ -41,7 +52,7 @@ function RoadmapDisplay() {
       {roadmapText && (
         <div className="button-group">
           <button
-            onClick={() => navigate('/start-roadmap')}
+            onClick={() => navigate('/start-roadmap', { state: { roadmap: roadmapText } })}
             className="button-primary"
           >
             Start Roadmap

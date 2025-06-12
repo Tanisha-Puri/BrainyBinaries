@@ -18,19 +18,22 @@ function RoadmapForm() {
     setLoading(true);
 
     try {
-      const response = await axios.post('/api/generate-roadmap', goal); // send object, not array
+      // Step 1: Save user goal
+      const saveRes = await axios.post('http://localhost:5000/api/user-goal', goal);
 
-      setLoading(false);
-
-      if (response.data) {
-        // Navigate and pass response data as state (optional)
-        navigate('/roadmap', { state: { roadmap: response.data } });
-      } else {
-        alert('No roadmap data received.');
+      if (!saveRes.data._id) {
+        throw new Error('Failed to retrieve saved goal ID');
       }
+
+      const goalId = saveRes.data._id;
+
+      // Step 2: Navigate to RoadmapDisplay with goal ID
+      navigate('/roadmap-display', { state: { goalId } });
+
     } catch (error) {
-      console.error('Error generating roadmap:', error);
-      alert('Failed to generate roadmap. Please try again.');
+      console.error('Error during goal submission:', error);
+      alert('Failed to save and generate roadmap. Please try again.');
+    } finally {
       setLoading(false);
     }
   };

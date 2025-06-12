@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -16,28 +15,32 @@ function StartRoadmap() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchMarkdown = async () => {
+    const fetchRoadmapFromBackend = async () => {
       try {
-        const roadmapFromState = location.state?.roadmap;
-        let markdown = roadmapFromState;
+        const goalId = location.state?.goalId;
 
-        if (!markdown) {
-          const response = await axios.get('/api/fetch-latest-roadmap'); // update this endpoint as needed
-          markdown = response.data?.markdown;
-
-          if (!markdown) {
-            navigate('/');
-            return;
-          }
+        if (!goalId) {
+          alert("No goal ID found. Redirecting...");
+          navigate('/');
+          return;
         }
 
-        // Regex to extract steps like "1. **Title** (optional metadata): description"
+        const response = await axios.get(`http://localhost:5000/api/generate-roadmap/${goalId}`);
+        const markdown = response.data?.roadmap;
+
+        if (!markdown) {
+          alert("No roadmap received. Redirecting...");
+          navigate('/');
+          return;
+        }
+
+        // Extract steps from markdown
         const regex = /\d+\.\s\*\*(.*?)\*\*\s*:?([\s\S]*?)(?=\n\d+\.|\n🎯|\n---|$)/g;
         const matches = [...markdown.matchAll(regex)];
 
         const extractedSteps = matches.map((match, index) => {
           const rawDesc = match[2].trim();
-          const metaMatch = rawDesc.match(/^\((.*?)\):?/); // optional metadata e.g. (approx. 2 hours, John):
+          const metaMatch = rawDesc.match(/^\((.*?)\):?/);
           const metadata = metaMatch ? metaMatch[1].trim() : null;
           const cleanedDescription = metaMatch
             ? rawDesc.replace(metaMatch[0], '').trim()
@@ -61,12 +64,12 @@ function StartRoadmap() {
         setLoading(false);
       } catch (error) {
         console.error('Failed to load roadmap:', error);
-        alert('Unable to load roadmap. Redirecting to home.');
+        alert('Unable to load roadmap. Redirecting...');
         navigate('/');
       }
     };
 
-    fetchMarkdown();
+    fetchRoadmapFromBackend();
   }, [location.state, navigate]);
 
   const currentStep = steps[stepIndex];
@@ -98,9 +101,7 @@ function StartRoadmap() {
             Step {stepIndex + 1}: {currentStep.title}
           </h3>
           <label
-            className={`checkbox-label ${
-              progress[currentStep.id] ? 'checked' : ''
-            }`}
+            className={`checkbox-label ${progress[currentStep.id] ? 'checked' : ''}`}
           >
             <input
               type="checkbox"
