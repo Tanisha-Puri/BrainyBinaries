@@ -1,9 +1,13 @@
 import { generateEmbedding } from "./embedding.js";
+import { fileURLToPath } from 'url';
 import fs from "fs";
 import path from "path";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const profiles = JSON.parse(
-  fs.readFileSync(path.resolve("data/mockProfiles.json"))
+  fs.readFileSync(path.join(__dirname, '../data/mockProfiles.json'), 'utf-8')
 );
 
 const cosineSimilarity = (vecA, vecB) => {
