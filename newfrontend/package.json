@@ -10,15 +10,26 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
+<<<<<<< HEAD
+    "axios": "^1.9.0",
+    "install": "^0.13.0",
+    "npm": "^11.4.1",
+    "package": "^1.0.1",
+=======
     "axios": "^1.7.7",
     "d3": "^7.9.0",
     "install": "^0.13.0",
+>>>>>>> 9b7d0720efa9ec8a5601462d02fae0b87978ee88
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.6.2",
     "react-scripts": "5.0.1",
+<<<<<<< HEAD
+    "remark-gfm": "^4.0.1",
+=======
     "react-tooltip": "^5.28.0",
+>>>>>>> 9b7d0720efa9ec8a5601462d02fae0b87978ee88
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -44,5 +55,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.5",
+    "tailwindcss": "^4.1.9"
   }
 }

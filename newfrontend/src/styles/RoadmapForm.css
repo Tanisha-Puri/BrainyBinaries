@@ -1,0 +1,100 @@
+@import '../theme.css';
+
+.form-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: var(--linkedin-bg);
+  box-sizing: border-box;
+}
+
+.card {
+  background-color: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  overflow: hidden;
+}
+
+.form-title {
+  color: var(--linkedin-blue);
+  font-size: 1.6rem;
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+
+.goal-section {
+  background-color: #f8fafd;
+  border: 1px dashed var(--linkedin-blue);
+  padding: 1rem;
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.goal-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.input-field {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: var(--radius);
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.button-primary {
+  background-color: var(--linkedin-blue);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button-primary:hover {
+  background-color: var(--linkedin-dark);
+}
+
+.button-secondary {
+  background-color: white;
+  color: var(--linkedin-blue);
+  border: 2px solid var(--linkedin-blue);
+  border-radius: var(--radius);
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button-secondary:hover {
+  background-color: var(--linkedin-blue);
+  color: white;
+}
+
+.remove-goal-button {
+  background: none;
+  border: none;
+  color: #d93025;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  align-self: flex-end;
+  transition: color 0.2s;
+}
+
+.remove-goal-button:hover {
+  color: #a80000;
+}

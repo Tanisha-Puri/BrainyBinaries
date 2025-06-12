@@ -1,0 +1,37 @@
+/* src/styles/AppBar.css */
+.app-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--linkedin-dark);
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  height: 60px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: var(--shadow);
+}
+
+.app-bar-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  margin-right: 10px;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.app-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0;
+  font-family: var(--font);
+}

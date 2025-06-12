@@ -1,0 +1,31 @@
+
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: var(--font);
+}
+
+.main-content-wrapper {
+  display: flex;
+  flex: 1;
+  margin-top: 60px; /* height of AppBar */
+}
+
+.main-content {
+  margin-left: 220px; /* width of Sidebar */
+  padding: 24px;
+  width: calc(100% - 220px);
+  box-sizing: border-box;
+  background-color: var(--linkedin-bg);
+  overflow-y: auto;
+}
+.main-content-no-sidebar {
+  margin-top: 60px; /* AppBar height */
+  padding: 24px;
+  box-sizing: border-box;
+  background-color: var(--linkedin-bg);
+  min-height: calc(100vh - 60px);
+}
+
