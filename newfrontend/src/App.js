@@ -1,6 +1,7 @@
 import React from 'react';
    import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
    import UserDashboard from './UserDashboard';
+   import PeerPodMatcher from './Pages/PeerPodMatcher';
    import './App.css';
 
    function Dashboard() {
@@ -35,7 +36,7 @@ import React from 'react';
          <Routes>
            <Route path="/" element={<Dashboard />} />
            <Route path="/roadmap" element={<div>Gen AI Roadmap Generator - Coming Soon</div>} />
-           <Route path="/peer-pod-matcher" element={<div>Peer Pod Matcher - Coming Soon</div>} />
+           <Route path="/peer-pod-matcher" element={<PeerPodMatcher />} />
            <Route path="/user-dashboard" element={<UserDashboard />} />
            <Route path="/add-interest" element={<div>Add Interest - Coming Soon</div>} />
          </Routes>
