@@ -8,7 +8,7 @@ const generateRoadmap = async (goal, level, timeline) => {
  const prompt = `
 You are an expert career coach and course advisor with deep knowledge of LinkedIn Learning content.
 
-Generate a highly specific and actionable learning roadmap for someone who wants to become a ${goal}. They are currently at a ${level} level and aim to achieve this goal in ${timeline} days.
+Generate a highly specific and actionable learning roadmap for someone who wants to become a **${goal}**. They are currently at a **${level}** level and aim to achieve this goal in **${timeline} days**.
 
 **Important Instructions:**
 - Break the roadmap into 3-5 clearly labeled **Phases**.
@@ -20,7 +20,6 @@ Generate a highly specific and actionable learning roadmap for someone who wants
 - Include **practical project tasks** where appropriate.
 - Mention **tools or technologies** the learner will use or install (e.g., GitHub, VS Code, React).
 - Conclude each phase with a **milestone or deliverable** (e.g., “Build a personal portfolio site”, “Deploy your first project on GitHub Pages”).
-- Make sure the roadmap feels like a curated course path with outcomes, not just a course list.
 
 Use only **LinkedIn Learning** (formerly Lynda) courses.
 
@@ -41,6 +40,7 @@ Format strictly like this:
 
 Now generate the full roadmap.
 `;
+
 
 
   try {

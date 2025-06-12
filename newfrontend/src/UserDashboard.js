@@ -21,15 +21,15 @@ import React, { useEffect, useRef, useState } from 'react';
            setError(null);
 
            // Fetch user profile
-           const userResponse = await axios.get('http://localhost:3000/api/user');
+           const userResponse = await axios.get('http://localhost:5000/api/user');
            setUser(userResponse.data);
 
            // Fetch roadmap
-           const roadmapResponse = await axios.get('http://localhost:3000/api/roadmap');
+           const roadmapResponse = await axios.get('http://localhost:5000/api/roadmap');
            setRoadmap(roadmapResponse.data);
 
            // Fetch motivational message
-           const motivationResponse = await axios.get('http://localhost:3000/api/motivation');
+           const motivationResponse = await axios.get('http://localhost:5000/api/motivation');
            setMotivationalMessage(motivationResponse.data.message);
          } catch (err) {
            setError('Failed to fetch data from the backend. Please try again later.');
