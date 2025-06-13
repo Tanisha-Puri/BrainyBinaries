@@ -9,11 +9,12 @@ function RoadmapDisplay() {
   const location = useLocation();
   const [roadmapText, setRoadmapText] = useState('');
   const [loading, setLoading] = useState(true);
+  const [feedback, setFeedback] = useState('');  // ✅ NEW: User feedback input
+  const [refining, setRefining] = useState(false); // ✅ NEW: Loading state for refinement
 
   const goalId = location.state?.goalId || sessionStorage.getItem('goalId');
-  useEffect(() => {
- // goalId should be passed from previous route
 
+  useEffect(() => {
     if (!goalId) {
       navigate('/');
       return;
@@ -34,6 +35,24 @@ function RoadmapDisplay() {
     fetchRoadmap();
   }, [goalId, navigate]);
 
+  const handleRefine = async () => {
+    if (!feedback.trim()) return;
+
+    setRefining(true);
+    try {
+      const response = await axios.patch(`http://localhost:5000/api/roadmap/${goalId}/update`, {
+        feedback,
+      });
+      setRoadmapText(response.data.roadmap);
+      setFeedback('');
+    } catch (error) {
+      console.error("Error refining roadmap:", error);
+      alert("Failed to refine roadmap. Please try again.");
+    } finally {
+      setRefining(false);
+    }
+  };
+
   if (loading) {
     return <p className="loading-message">Loading your roadmap...</p>;
   }
@@ -51,14 +70,33 @@ function RoadmapDisplay() {
       )}
 
       {roadmapText && (
-        <div className="button-group">
-          <button
-            onClick={() => navigate('/start-roadmap', { state: { roadmap: roadmapText,goalId } })}
-            className="button-primary"
-          >
-            Start Roadmap
-          </button>
-        </div>
+        <>
+          <div className="button-group">
+            <button
+              onClick={() => navigate('/start-roadmap', { state: { roadmap: roadmapText, goalId } })}
+              className="button-primary"
+            >
+              Start Roadmap
+            </button>
+          </div>
+
+          {/* ✅ NEW: Feedback and refine option */}
+          <div className="refine-section">
+            <textarea
+              className="feedback-textarea"
+              placeholder="Enter your feedback to refine the roadmap..."
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
+            />
+            <button
+              className="button-secondary"
+              onClick={handleRefine}
+              disabled={refining}
+            >
+              {refining ? "Refining..." : "Refine Roadmap"}
+            </button>
+          </div>
+        </>
       )}
     </div>
   );

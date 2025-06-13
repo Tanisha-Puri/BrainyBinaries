@@ -7,7 +7,7 @@ require("dotenv").config();
 const UserGoal = require("./models/UserGoals");
 console.log("UserGoal schema timeline type:", UserGoal.schema.path('timeline').instance);
 const generateRoadmap = require("./services/geminiService");
-
+const refineRoadmap = require("./services/refineService");
 const Roadmap = require("./models/Roadmap");
 
 const app = express();
@@ -134,6 +134,32 @@ app.get("/api/user-goal/:goalId/progress", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch progress" });
   }
 });
+
+app.patch("/api/roadmap/:goalId/update", async (req, res) => {
+  const { goalId } = req.params;
+  const { feedback } = req.body;
+
+  try {
+    // 1. Fetch current roadmap
+    const roadmap = await Roadmap.findOne({ goalId });
+    if (!roadmap) {
+      return res.status(404).json({ error: "Roadmap not found" });
+    }
+
+    // 2. Use Gemini to refine it
+    const updatedContent = await refineRoadmap(roadmap.content, feedback);
+
+    // 3. Update MongoDB
+    roadmap.content = updatedContent;
+    await roadmap.save();
+
+    res.status(200).json({ message: "Roadmap updated successfully", roadmap: updatedContent });
+  } catch (err) {
+    console.error("❌ Error updating roadmap:", err);
+    res.status(500).json({ error: "Failed to update roadmap", details: err.message });
+  }
+});
+
 
 
 const PORT = process.env.PORT || 5000;

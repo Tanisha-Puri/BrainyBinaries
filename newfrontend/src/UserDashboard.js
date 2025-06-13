@@ -97,6 +97,14 @@ function UserDashboard() {
               <Link to="/start-roadmap" state={{ goalId: rmap.goalId }} className="resume-button">
                 Continue Roadmap →
               </Link>
+              <Link
+                to="/roadmap-display"
+                state={{ goalId: rmap.goalId }}
+                className="edit-button"
+              >
+                View Full Roadmap
+              </Link>
+
             </div>
           ))}
         </section>
