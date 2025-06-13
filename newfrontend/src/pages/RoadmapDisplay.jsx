@@ -10,8 +10,9 @@ function RoadmapDisplay() {
   const [roadmapText, setRoadmapText] = useState('');
   const [loading, setLoading] = useState(true);
 
+  const goalId = location.state?.goalId || sessionStorage.getItem('goalId');
   useEffect(() => {
-    const goalId = location.state?.goalId; // goalId should be passed from previous route
+ // goalId should be passed from previous route
 
     if (!goalId) {
       navigate('/');
@@ -31,7 +32,7 @@ function RoadmapDisplay() {
     };
 
     fetchRoadmap();
-  }, [location.state, navigate]);
+  }, [goalId, navigate]);
 
   if (loading) {
     return <p className="loading-message">Loading your roadmap...</p>;
@@ -52,7 +53,7 @@ function RoadmapDisplay() {
       {roadmapText && (
         <div className="button-group">
           <button
-            onClick={() => navigate('/start-roadmap', { state: { roadmap: roadmapText } })}
+            onClick={() => navigate('/start-roadmap', { state: { roadmap: roadmapText,goalId } })}
             className="button-primary"
           >
             Start Roadmap

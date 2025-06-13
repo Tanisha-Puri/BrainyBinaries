@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 html, body {
   height: 100%;
   margin: 0;
@@ -7,8 +6,6 @@ html, body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.App {
-=======
 /* .App {
 >>>>>>> 9b7d0720efa9ec8a5601462d02fae0b87978ee88
   text-align: center;
@@ -53,8 +50,6 @@ html, body {
   align-items: center;
   justify-content: center;
 }
-
-<<<<<<< HEAD
 html, body, #root, .App {
   height: 100%;
   background-color: var(--linkedin-bg);
@@ -63,7 +58,6 @@ html, body, #root, .App {
   padding: 0;
 }
 
-=======
 .App-header {
   margin-bottom: 40px;
 }
@@ -105,4 +99,3 @@ html, body, #root, .App {
 .option-button:hover {
   background-color: #0056b3;
 }
->>>>>>> 9b7d0720efa9ec8a5601462d02fae0b87978ee88

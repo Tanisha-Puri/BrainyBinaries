@@ -23,8 +23,8 @@ app.post("/api/user-goal", async (req, res) => {
   
     try {
       const newGoal = new UserGoal({ goal, timeline, level });
-      await newGoal.save();
-      res.status(201).json({ message: "Goal saved successfully!" });
+      const savedGoal = await newGoal.save(); // Save and hold the result
+      res.status(201).json(savedGoal); // <-- return it to frontend
     } catch (err) {
       console.error("Error saving goal:", err);  // <--- Log actual error details here
       res.status(500).json({ error: "Failed to save goal", details: err.message });

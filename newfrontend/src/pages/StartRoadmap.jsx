@@ -17,7 +17,7 @@ function StartRoadmap() {
   useEffect(() => {
     const fetchRoadmapFromBackend = async () => {
       try {
-        const goalId = location.state?.goalId;
+        const goalId = location.state?.goalId || sessionStorage.getItem('goalId');
 
         if (!goalId) {
           alert("No goal ID found. Redirecting...");

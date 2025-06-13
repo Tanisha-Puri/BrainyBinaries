@@ -20,7 +20,8 @@ function RoadmapForm() {
     try {
       // Step 1: Save user goal
       const saveRes = await axios.post('http://localhost:5000/api/user-goal', goal);
-
+      console.log("Full backend response:", saveRes.data);
+    console.log("Keys in response object:", Object.keys(saveRes.data));
       if (!saveRes.data._id) {
         throw new Error('Failed to retrieve saved goal ID');
       }
@@ -28,7 +29,10 @@ function RoadmapForm() {
       const goalId = saveRes.data._id;
 
       // Step 2: Navigate to RoadmapDisplay with goal ID
-      navigate('/roadmap-display', { state: { goalId } });
+      sessionStorage.setItem('goalId', goalId);
+      console.log('Goal ID saved to sessionStorage:', sessionStorage.getItem('goalId'));
+      navigate('/roadmap-display');
+
 
     } catch (error) {
       console.error('Error during goal submission:', error);

@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import RoadmapForm from './pages/RoadmapForm';
-import RoadmapDisplay from './pages/RoadmapDisplay';
-import StartRoadmap from './pages/StartRoadmap';
+import RoadmapForm from './Pages/RoadmapForm';
+import RoadmapDisplay from './Pages/RoadmapDisplay';
+import StartRoadmap from './Pages/StartRoadmap';
 import AppLayout from './components/AppLayout';
 import UserDashboard from './UserDashboard';
 import PeerPodMatcher from './Pages/PeerPodMatcher';
