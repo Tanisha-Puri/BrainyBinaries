@@ -1,113 +1,113 @@
-import React, { useEffect, useRef, useState } from 'react';
-   import { Link } from 'react-router-dom';
-   import axios from 'axios';
-   import './UserDashboard.css';
-   import ReactMarkdown from "react-markdown";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import ReactMarkdown from 'react-markdown';
+import './UserDashboard.css';
 
-   function UserDashboard() {
-     const [user, setUser] = useState(null);
-     const [roadmap, setRoadmap] = useState('');
-     const [motivationalMessage, setMotivationalMessage] = useState('');
-     const [loading, setLoading] = useState(true);
-     const [error, setError] = useState(null);
-     const [selectedNode, setSelectedNode] = useState(null);
+function UserDashboard() {
+  const [user, setUser] = useState(null);
+  const [roadmap, setRoadmap] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-     useEffect(() => {
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      // Fetch user goals
-      const goalResponse = await axios.get('http://localhost:5000/api/user-goal');
-      const goals = goalResponse.data;
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoading(true);
+        const goalResponse = await axios.get('http://localhost:5000/api/user-goal');
+        const goals = goalResponse.data;
 
-      if (goals.length === 0) {
-        setError("No goals found. Please add one.");
+        if (goals.length === 0) {
+          setError('No goals found. Please add one.');
+          setLoading(false);
+          return;
+        }
+
+        const goalsWithData = await Promise.all(
+          goals.map(async (goal) => {
+            console.log('Goal from API:', goal);
+            const [roadmapRes, progressRes] = await Promise.all([
+              axios.get(`http://localhost:5000/api/generate-roadmap/${goal._id}`),
+              axios.get(`http://localhost:5000/api/user-goal/${goal._id}/progress`),
+            ]);
+            const markdown = roadmapRes.data?.roadmap || '';
+
+            // parse steps (numbered list with bold titles)
+            const regex = /\d+\.\s\*\*(.*?)\*\*\s*:?([\s\S]*?)(?=\n\d+\.|\n🎯|\n---|$)/g;
+            const matches = [...markdown.matchAll(regex)];
+
+            const steps = matches.map((match, index) => ({
+              id: `step-${index}`,
+              title: match[1].trim(),
+              description: match[2].trim(),
+            }));
+
+            const progress = progressRes.data?.progress || {};
+            const completedSteps = Object.values(progress).filter(Boolean).length;
+            const totalSteps = steps.length;
+            const percentage = totalSteps ? Math.round((completedSteps / totalSteps) * 100) : 0;
+
+            return {
+              goalId: goal._id,
+              goalTitle: goal.goal && goal.goal.trim() !== '' ? goal.goal : 'Untitled Goal',
+              steps,
+              progress,
+              percentage,
+            };
+          })
+        );
+
+        setUser({
+          name: 'User',
+          roadmapsStarted: goals.length,
+          interestsAdded: 1,
+        });
+
+        setRoadmap(goalsWithData);
+      } catch (err) {
+        setError('Failed to fetch roadmap.');
+        console.error(err);
+      } finally {
         setLoading(false);
-        return;
       }
-
-      // For simplicity, pick the first goal and generate roadmap for it
-      const selectedGoal = goals[0];
-      setUser({ name: "User", roadmapsStarted: goals.length, interestsAdded: 1 }); // dummy user info
-
-      const roadmapResponse = await axios.get(`http://localhost:5000/api/generate-roadmap/${selectedGoal._id}`);
-      setRoadmap(roadmapResponse.data.roadmap); // should be a string
-    } catch (err) {
-      setError("Failed to fetch roadmap.");
-      console.error(err);
-    } finally {
-      setLoading(false);
     }
-  };
 
-  fetchData();
-}, []);
+    fetchData();
+  }, []);
 
-     if (loading) {
-       return (
-         <div className="UserDashboard">
-           <header className="UserDashboard-header">
-             <h1>User Dashboard</h1>
-           </header>
-           <main className="UserDashboard-main">
-             <p>Loading...</p>
-           </main>
-         </div>
-       );
-     }
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p className="error">{error}</p>;
 
-     if (error) {
-       return (
-         <div className="UserDashboard">
-           <header className="UserDashboard-header">
-             <h1>User Dashboard</h1>
-           </header>
-           <main className="UserDashboard-main">
-             <p className="error">{error}</p>
-           </main>
-         </div>
-       );
-     }
+  return (
+    <div className="UserDashboard">
+      <header>
+        <h1>User Dashboard</h1>
+      </header>
+      <main>
+        <section className="roadmap-section">
+          <h2>Your Roadmaps</h2>
+          {roadmap.length === 0 && <p>No roadmaps found.</p>}
+          {roadmap.map((rmap) => (
+            <div key={rmap.goalId} className="roadmap-card">
+              <h3>{rmap.goalTitle}</h3>
+              <p>{rmap.percentage}% completed</p>
+              <div className="progress-bar-bg">
+                <div className="progress-bar-fill" style={{ width: `${rmap.percentage}%` }} />
+              </div>
+              <Link to="/start-roadmap" state={{ goalId: rmap.goalId }} className="resume-button">
+                Continue Roadmap →
+              </Link>
+            </div>
+          ))}
+        </section>
+        <section className="profile-section">
+          <h3>{user?.name || 'User'}</h3>
+          <p>Roadmaps Started: {user?.roadmapsStarted || 0}</p>
+          <p>Interests Added: {user?.interestsAdded || 0}</p>
+        </section>
+      </main>
+    </div>
+  );
+}
 
-     return (
-       <div className="UserDashboard">
-         <header className="UserDashboard-header">
-           <h1>User Dashboard</h1>
-         </header>
-         <main className="UserDashboard-main">
-           <div className="roadmap-section">
-  <h2>Your Roadmap</h2>
-  <div className="roadmap-markdown">
-    <ReactMarkdown>{roadmap}</ReactMarkdown>
-  </div>
-</div>
-           <div className="info-section">
-             <div className="profile-section">
-               <h3>{user?.name || 'User'}</h3>
-               <p>Roadmaps Started: {user?.roadmapsStarted || 0}</p>
-               <p>Interests Added: {user?.interestsAdded || 0}</p>
-             </div>
-             {selectedNode && (
-               <div className="node-details">
-                 <h3>Node Details</h3>
-                 <p><strong>Title:</strong> {selectedNode.title}</p>
-                 <p><strong>Status:</strong> {selectedNode.completed ? 'Completed' : 'Pending'}</p>
-                 <p><strong>Resource:</strong> <a href={selectedNode.resource} target="_blank" rel="noopener noreferrer">{selectedNode.resource}</a></p>
-               </div>
-             )}
-             <div className="motivation-section">
-               <p>{motivationalMessage || 'Keep up the good work!'}</p>
-             </div>
-             <div className="action-section">
-               <Link to="/add-interest" className="action-button">
-                 Add Another Interest
-               </Link>
-             </div>
-           </div>
-         </main>
-       </div>
-     );
-   }
-
-   export default UserDashboard;
+export default UserDashboard;

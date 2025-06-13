@@ -8,6 +8,8 @@ const UserGoal = require("./models/UserGoals");
 console.log("UserGoal schema timeline type:", UserGoal.schema.path('timeline').instance);
 const generateRoadmap = require("./services/geminiService");
 
+const Roadmap = require("./models/Roadmap");
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -56,19 +58,41 @@ app.post("/api/generate-roadmap", async (req, res) => {
 
 app.get("/api/generate-roadmap/:goalId", async (req, res) => {
   const { goalId } = req.params;
+
   try {
+    // 1. Check if roadmap already exists
+    let existingRoadmap = await Roadmap.findOne({ goalId });
+
+    if (existingRoadmap) {
+      return res.status(200).json({ roadmap: existingRoadmap.content });
+    }
+
+    // 2. Fetch goal details
     const userGoal = await UserGoal.findById(goalId);
     if (!userGoal) {
       return res.status(404).json({ error: "User goal not found" });
     }
+
     const { goal, level, timeline } = userGoal;
-    const roadmap = await generateRoadmap(goal, level, timeline);
-    res.status(200).json({ roadmap });
+
+    // 3. Generate new roadmap from Gemini
+    const roadmapContent = await generateRoadmap(goal, level, timeline);
+
+    // 4. Save new roadmap (after checking it didn't get created in the meantime)
+    existingRoadmap = await Roadmap.findOne({ goalId });
+    if (!existingRoadmap) {
+      const newRoadmap = new Roadmap({ goalId, content: roadmapContent });
+      await newRoadmap.save();
+    }
+
+    res.status(200).json({ roadmap: roadmapContent });
+
   } catch (error) {
-    console.error("Error generating roadmap from saved goal:", error);
+    console.error("❌ Error generating roadmap from saved goal:", error);
     res.status(500).json({ error: "Failed to generate roadmap" });
   }
 });
+
 
 // Add this below your existing routes
 app.patch("/api/user-goal/:goalId/progress", async (req, res) => {
