@@ -10,6 +10,8 @@ function StartRoadmap() {
   const [stepIndex, setStepIndex] = useState(0);
   const [progress, setProgress] = useState({});
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -54,9 +56,14 @@ function StartRoadmap() {
           };
         });
 
+        const progressResponse = await axios.get(
+  `http://localhost:5000/api/user-goal/${goalId}/progress`
+);
+const savedProgress = progressResponse.data.progress || {};
+
         const initialProgress = {};
-        extractedSteps.forEach(step => {
-          initialProgress[step.id] = false;
+        extractedSteps.forEach((step) => {
+          initialProgress[step.id] = savedProgress[step.id] || false;
         });
 
         setSteps(extractedSteps);
@@ -74,13 +81,24 @@ function StartRoadmap() {
 
   const currentStep = steps[stepIndex];
 
-  const toggleCheckbox = () => {
-    const stepId = currentStep.id;
-    setProgress(prev => ({
-      ...prev,
-      [stepId]: !prev[stepId],
-    }));
+  const toggleCheckbox = async () => {
+  const stepId = currentStep.id;
+  const updatedProgress = {
+    ...progress,
+    [stepId]: !progress[stepId],
   };
+  setProgress(updatedProgress);
+
+  const goalId = location.state?.goalId || sessionStorage.getItem('goalId');
+  try {
+    await axios.patch(`http://localhost:5000/api/user-goal/${goalId}/progress`, {
+      progress: updatedProgress,
+    });
+  } catch (err) {
+    console.error("Error saving progress:", err);
+  }
+};
+
 
   const completed = Object.values(progress).filter(Boolean).length;
   const percentage = steps.length
@@ -143,6 +161,29 @@ function StartRoadmap() {
       </div>
 
       <div className="progress-container">
+        <div className="button-row">
+  <button
+  className="button-secondary"
+  disabled={saving}
+  onClick={async () => {
+    setSaving(true);
+    const goalId = location.state?.goalId || sessionStorage.getItem('goalId');
+    try {
+      await axios.patch(`http://localhost:5000/api/user-goal/${goalId}/progress`, {
+        progress,
+      });
+    } catch (err) {
+      console.error('Error saving progress before navigating back:', err);
+    } finally {
+      setSaving(false);
+      navigate(-1);
+    }
+  }}
+>
+  {saving ? 'Saving...' : '← Back'}
+</button>
+</div>
+
         <div className="progress-label">
           {percentage}% completed • {steps.length - completed} steps left
         </div>

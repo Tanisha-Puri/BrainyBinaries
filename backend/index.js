@@ -70,6 +70,48 @@ app.get("/api/generate-roadmap/:goalId", async (req, res) => {
   }
 });
 
+// Add this below your existing routes
+app.patch("/api/user-goal/:goalId/progress", async (req, res) => {
+  const { goalId } = req.params;
+  const { progress } = req.body;
+
+  try {
+    const updatedGoal = await UserGoal.findByIdAndUpdate(
+      goalId,
+      { progress },
+      { new: true }
+    );
+
+    if (!updatedGoal) {
+      return res.status(404).json({ error: "User goal not found" });
+    }
+
+    res.status(200).json({ message: "Progress updated", progress: updatedGoal.progress });
+  } catch (err) {
+    console.error("Error updating progress:", err);
+    res.status(500).json({ error: "Failed to update progress" });
+  }
+});
+
+
+app.get("/api/user-goal/:goalId/progress", async (req, res) => {
+  const { goalId } = req.params;
+
+  try {
+    const goal = await UserGoal.findById(goalId);
+
+    if (!goal) {
+      return res.status(404).json({ error: "User goal not found" });
+    }
+
+    res.status(200).json({ progress: goal.progress || {} });
+  } catch (err) {
+    console.error("Error fetching progress:", err);
+    res.status(500).json({ error: "Failed to fetch progress" });
+  }
+});
+
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
