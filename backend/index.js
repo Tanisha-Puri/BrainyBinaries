@@ -1,4 +1,3 @@
-
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -9,6 +8,15 @@ console.log("UserGoal schema timeline type:", UserGoal.schema.path('timeline').i
 const generateRoadmap = require("./services/geminiService");
 const refineRoadmap = require("./services/refineService");
 const Roadmap = require("./models/Roadmap");
+const { initializeProfileEmbeddings, findMatches } = require("./utils/matcher");
+(async () => {
+  try {
+    await initializeProfileEmbeddings(); // Ensure embeddings are ready
+  } catch (err) {
+    console.error("❌ Failed to initialize matcher:", err);
+    process.exit(1);
+  }
+})();
 
 const app = express();
 app.use(cors());
@@ -157,6 +165,18 @@ app.patch("/api/roadmap/:goalId/update", async (req, res) => {
   } catch (err) {
     console.error("❌ Error updating roadmap:", err);
     res.status(500).json({ error: "Failed to update roadmap", details: err.message });
+  }
+});
+
+app.post("/api/match", async (req, res) => {
+  const { userText, type } = req.body;
+
+  try {
+    const results = await findMatches(userText, type);
+    res.json(results);
+  } catch (err) {
+    console.error("❌ Error matching profiles:", err);
+    res.status(500).send("Error matching profiles");
   }
 });
 
