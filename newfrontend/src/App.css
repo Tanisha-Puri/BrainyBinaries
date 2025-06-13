@@ -1,4 +1,16 @@
+<<<<<<< HEAD
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--linkedin-bg);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.App {
+=======
 /* .App {
+>>>>>>> 9b7d0720efa9ec8a5601462d02fae0b87978ee88
   text-align: center;
 }
 
@@ -14,15 +26,10 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background-color: var(--linkedin-bg);
+  color: var(--linkedin-text);
 }
+
 
 .App-link {
   color: #61dafb;
@@ -47,6 +54,16 @@
   justify-content: center;
 }
 
+<<<<<<< HEAD
+html, body, #root, .App {
+  height: 100%;
+  background-color: var(--linkedin-bg);
+  font-family: var(--font);
+  margin: 0;
+  padding: 0;
+}
+
+=======
 .App-header {
   margin-bottom: 40px;
 }
@@ -88,3 +105,4 @@
 .option-button:hover {
   background-color: #0056b3;
 }
+>>>>>>> 9b7d0720efa9ec8a5601462d02fae0b87978ee88

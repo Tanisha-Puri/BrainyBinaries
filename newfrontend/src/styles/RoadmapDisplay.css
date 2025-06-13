@@ -1,0 +1,100 @@
+@import '../theme.css';
+
+.roadmap-container {
+  max-width: 860px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--linkedin-bg);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', sans-serif;
+  color: var(--linkedin-text);
+}
+
+.section-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--linkedin-blue);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.roadmap-markdown {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--linkedin-text);
+}
+
+.roadmap-markdown h2,
+.roadmap-markdown h3 {
+  color: var(--linkedin-blue);
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.roadmap-markdown p {
+  margin-bottom: 1rem;
+}
+
+.roadmap-markdown ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.roadmap-markdown li {
+  margin-bottom: 0.5rem;
+}
+
+.roadmap-markdown strong {
+  color: var(--linkedin-blue);
+  font-weight: 600;
+}
+
+.roadmap-markdown em {
+  color: #555;
+  font-style: italic;
+}
+
+.roadmap-markdown a {
+  color: var(--linkedin-blue);
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.roadmap-markdown a:hover {
+  color: var(--linkedin-dark);
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+}
+
+.button-primary {
+  background: linear-gradient(135deg, var(--linkedin-blue), var(--linkedin-dark));
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 28px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  box-shadow: 0 6px 16px rgba(0, 119, 181, 0.25);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 220px;
+}
+
+.button-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 24px rgba(0, 119, 181, 0.35);
+  background: linear-gradient(135deg, var(--linkedin-dark), #003c66);
+}
+
+.loading-message,
+.empty-message {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #666;
+  padding: 2rem 1rem;
+}
