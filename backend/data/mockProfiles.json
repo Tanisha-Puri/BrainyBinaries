@@ -27,7 +27,8 @@
       }
     ],
     "skills": ["React", "Node.js", "TailwindCSS"],
-    "programs": ["LinkedIn Coaching 2025"]
+    "programs": ["LinkedIn Coaching 2025"],
+    "badges": ["Open to Collaboration"]
   },
   {
     "userId": "u002",
@@ -57,7 +58,8 @@
       }
     ],
     "skills": ["System Design", "Distributed Systems", "Java"],
-    "programs": ["LinkedIn Coaching 2025"]
+    "programs": ["LinkedIn Coaching 2025"],
+    "badges": ["Open to Mentorship"]
   },
   {
     "userId": "u003",
@@ -81,7 +83,8 @@
       }
     ],
     "skills": ["Python", "Transformers", "LLMs"],
-    "programs": ["LinkedIn Coaching 2025"]
+    "programs": ["LinkedIn Coaching 2025"],
+    "badges": ["Open to Collaboration"]
   },
   {
     "userId": "u004",
@@ -111,7 +114,8 @@
       }
     ],
     "skills": ["Java", "Microservices", "Leadership"],
-    "programs": []
+    "programs": [],
+    "badges": ["Open to Mentorship"]
   },
   {
     "userId": "u005",
@@ -141,7 +145,8 @@
       }
     ],
     "skills": ["HTML", "CSS", "JavaScript", "Git"],
-    "programs": ["GSSoC 2024"]
+    "programs": ["GSSoC 2024"],
+    "badges": ["Open to Collaboration"]
   },
   {
     "userId": "u006",
@@ -177,7 +182,8 @@
       }
     ],
     "skills": ["Node.js", "Databases", "System Design"],
-    "programs": []
+    "programs": [],
+    "badges": ["Open to Mentorship"]
   },
   {
     "userId": "u007",
@@ -207,7 +213,8 @@
       }
     ],
     "skills": ["Machine Learning", "Python", "TensorFlow"],
-    "programs": ["LinkedIn Coaching 2025"]
+    "programs": ["LinkedIn Coaching 2025"],
+    "badges": ["Open to Collaboration"]
   },
   {
     "userId": "u008",
@@ -243,7 +250,8 @@
       }
     ],
     "skills": ["Data Science", "Power BI", "SQL", "Python"],
-    "programs": []
+    "programs": [],
+    "badges": ["Open to Mentorship"]
   },
   {
     "userId": "u009",
@@ -261,7 +269,8 @@
     ],
     "volunteer": [],
     "skills": ["Python", "Transformers", "Prompting"],
-    "programs": ["LinkedIn Coaching 2025"]
+    "programs": ["LinkedIn Coaching 2025"],
+    "badges": ["Open to Collaboration"]
   },
   {
     "userId": "u010",
@@ -297,6 +306,133 @@
       }
     ],
     "skills": ["Java", "Team Management", "Product Thinking"],
-    "programs": []
+    "programs": [],
+    "badges": ["Open to Mentorship"]
+  },
+  {
+    "userId": "u011",
+    "name": "Kriti Malhotra",
+    "headline": "Data Analyst Intern | Excel & SQL Ninja | Curious Learner",
+    "about": "I love exploring datasets and finding patterns to tell stories.",
+    "experience": [
+      {
+        "title": "Data Analyst Intern",
+        "company": "DataSpark",
+        "start": "June 2024",
+        "end": "Present"
+      }
+    ],
+    "education": [
+      {
+        "institution": "DU North Campus",
+        "degree": "B.Sc Statistics",
+        "startYear": 2022,
+        "endYear": 2025
+      }
+    ],
+    "skills": ["Excel", "SQL", "Power BI"],
+    "programs": [],
+    "badges": ["Open to Collaboration"]
+  },
+  {
+    "userId": "u012",
+    "name": "Dhruv Singh",
+    "headline": "ML Engineer @ Meta | Mentor @ ML4Good",
+    "about": "Building ML pipelines at scale and mentoring future ML engineers.",
+    "experience": [
+      {
+        "title": "Machine Learning Engineer",
+        "company": "Meta",
+        "start": "2022",
+        "end": "Present"
+      }
+    ],
+    "education": [
+      {
+        "institution": "IIT Madras",
+        "degree": "B.Tech + M.Tech Dual Degree",
+        "startYear": 2015,
+        "endYear": 2020
+      }
+    ],
+    "skills": ["PyTorch", "ML Ops", "Recommendation Systems"],
+    "programs": ["ML4Good"],
+    "badges": ["Open to Mentorship"]
+  },
+  {
+    "userId": "u013",
+    "name": "Sneha Patil",
+    "headline": "Flutter Dev Intern | Mentee @ SHECodes | UI/UX Explorer",
+    "about": "Designing beautiful interfaces and learning Flutter app dev.",
+    "experience": [
+      {
+        "title": "Flutter Developer Intern",
+        "company": "DevNest",
+        "start": "May 2024",
+        "end": "Present"
+      }
+    ],
+    "education": [
+      {
+        "institution": "PES University",
+        "degree": "B.Tech Information Science",
+        "startYear": 2021,
+        "endYear": 2025
+      }
+    ],
+    "volunteer": [],
+    "skills": ["Flutter", "Figma", "Dart"],
+    "programs": ["SHECodes 2024"],
+    "badges": ["Open to Collaboration"]
+  },
+  {
+    "userId": "u014",
+    "name": "Karan Joshi",
+    "headline": "Founder @ DevCircle | Backend Mentor | Tech Evangelist",
+    "about": "Building tech communities and mentoring founders & engineers.",
+    "experience": [
+      {
+        "title": "Founder",
+        "company": "DevCircle",
+        "start": "2019",
+        "end": "Present"
+      }
+    ],
+    "education": [
+      {
+        "institution": "VJTI Mumbai",
+        "degree": "B.Tech Computer Science",
+        "startYear": 2012,
+        "endYear": 2016
+      }
+    ],
+    "skills": ["Golang", "Leadership", "Community Building"],
+    "programs": [],
+    "badges": ["Open to Mentorship"]
+  },
+  {
+    "userId": "u015",
+    "name": "Priya Iyer",
+    "headline": "DevRel Intern @ OpenCode | Tech Podcaster | Community Lover",
+    "about": "Connecting developers through talks, podcasts, and docs.",
+    "experience": [
+      {
+        "title": "DevRel Intern",
+        "company": "OpenCode",
+        "start": "March 2024",
+        "end": "Present"
+      }
+    ],
+    "education": [
+      {
+        "institution": "Anna University",
+        "degree": "B.E. CSE",
+        "startYear": 2020,
+        "endYear": 2024
+      }
+    ],
+    "skills": ["Public Speaking", "Documentation", "GitHub"],
+    "programs": [],
+    "badges": ["Open to Collaboration"]
   }
 ]

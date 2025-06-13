@@ -44,7 +44,19 @@ const findMatches = async (inputText, role) => {
 
   const inputEmbedding = await generateEmbedding(inputText);
 
-  const matches = profilesWithEmbeddings.map(({ profile, embedding }) => {
+  // ✅ Filter profiles by badge type before similarity matching
+  let filteredProfiles = profilesWithEmbeddings;
+  if (role === "mentor") {
+    filteredProfiles = profilesWithEmbeddings.filter(({ profile }) =>
+      profile.badges?.includes("Open to Mentorship")
+    );
+  } else if (role === "peer") {
+    filteredProfiles = profilesWithEmbeddings.filter(({ profile }) =>
+      profile.badges?.includes("Open to Collaboration")
+    );
+  }
+
+  const matches = filteredProfiles.map(({ profile, embedding }) => {
     const similarity = cosineSimilarity(inputEmbedding, embedding);
     return { profile, similarity };
   });
@@ -53,6 +65,7 @@ const findMatches = async (inputText, role) => {
 
   return matches.slice(0, 5);
 };
+
 
 module.exports = {
   initializeProfileEmbeddings,

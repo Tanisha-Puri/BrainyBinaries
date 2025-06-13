@@ -83,15 +83,32 @@ export default function PeerPodMatcher() {
               <p className="about">{profile.about}</p>
 
               <div className="skills">
-                <p>Skills:</p>
-                <div className="skill-tags">
-                  {profile.skills.map((skill, i) => (
-                    <span key={i} className="tag">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
+  <p>Skills:</p>
+  <div className="skill-tags">
+    {profile.skills.map((skill, i) => (
+      <span key={i} className="tag">
+        {skill}
+      </span>
+    ))}
+  </div>
+</div>
+
+{/* Add this badges section */}
+<div className="badges">
+  <p>Badges:</p>
+  <div className="badge-tags">
+    {profile.badges && profile.badges.length > 0 ? (
+      profile.badges.map((badge, i) => (
+        <span key={i} className="badge-tag">
+          {badge}
+        </span>
+      ))
+    ) : (
+      <span className="badge-tag no-badge">No badges</span>
+    )}
+  </div>
+</div>
+
 
               <div className="edu-exp">
                 <p>

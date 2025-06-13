@@ -20,6 +20,26 @@ html, body {
   box-sizing: border-box;
 }
 
+.badge-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.badge-tag {
+  background-color: #e0f7fa;
+  color: #00796b;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.badge-tag.no-badge {
+  background-color: #f0f0f0;
+  color: #999;
+}
+
 
 
 .title {
