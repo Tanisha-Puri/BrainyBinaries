@@ -29,10 +29,10 @@ mongoose.connect(process.env.MONGO_URI)
 
 // POST route to save user goal
 app.post("/api/user-goal", async (req, res) => {
-    const { goal, timeline, level } = req.body;
+    const { goal, timeline, level, prompt } = req.body;
   
     try {
-      const newGoal = new UserGoal({ goal, timeline, level });
+      const newGoal = new UserGoal({ goal, timeline, level, prompt });
       const savedGoal = await newGoal.save(); // Save and hold the result
       res.status(201).json(savedGoal); // <-- return it to frontend
     } catch (err) {
@@ -53,10 +53,10 @@ app.get("/api/user-goal", async (req, res) => {
 });
 
 app.post("/api/generate-roadmap", async (req, res) => {
-  const { goal, level, timeline } = req.body;
+  const { goal, level, timeline, prompt } = req.body;
 
   try {
-    const roadmap = await generateRoadmap(goal, level, timeline);
+    const roadmap = await generateRoadmap(goal, level, timeline, prompt);
     res.status(200).json({ roadmap });
   } catch (error) {
     console.error("Error generating roadmap:", error.message);
@@ -68,25 +68,21 @@ app.get("/api/generate-roadmap/:goalId", async (req, res) => {
   const { goalId } = req.params;
 
   try {
-    // 1. Check if roadmap already exists
     let existingRoadmap = await Roadmap.findOne({ goalId });
 
     if (existingRoadmap) {
       return res.status(200).json({ roadmap: existingRoadmap.content });
     }
 
-    // 2. Fetch goal details
     const userGoal = await UserGoal.findById(goalId);
     if (!userGoal) {
       return res.status(404).json({ error: "User goal not found" });
     }
 
-    const { goal, level, timeline } = userGoal;
+    const { goal, level, timeline, prompt } = userGoal; // ✅ Add prompt
 
-    // 3. Generate new roadmap from Gemini
-    const roadmapContent = await generateRoadmap(goal, level, timeline);
+    const roadmapContent = await generateRoadmap(goal, level, timeline, prompt); // ✅ Pass prompt
 
-    // 4. Save new roadmap (after checking it didn't get created in the meantime)
     existingRoadmap = await Roadmap.findOne({ goalId });
     if (!existingRoadmap) {
       const newRoadmap = new Roadmap({ goalId, content: roadmapContent });

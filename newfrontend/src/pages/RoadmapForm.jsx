@@ -5,7 +5,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import '../styles/RoadmapForm.css';
 
 function RoadmapForm() {
-  const [goal, setGoal] = useState({ goal: '', timeline: '', level: '' });
+  const [goal, setGoal] = useState({ goal: '', timeline: '', level: '', customPrompt: '' });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -59,6 +59,14 @@ function RoadmapForm() {
                 className="input-field"
                 required
               />
+                <input type="text"
+                placeholder="Add additional details (e.g., tech stack, goals, experience)..."
+                value={goal.customPrompt}
+                onChange={(e) => handleChange('customPrompt', e.target.value)}
+                className="input-field"
+                rows={4}
+              />
+
               <input
                 type="text"
                 placeholder="Timeline (e.g. 3 months)"

@@ -3,11 +3,17 @@ require("dotenv").config();
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-const generateRoadmap = async (goal, level, timeline) => {
+const generateRoadmap = async (goal, level, timeline, customPrompt = '') => {
   const prompt = `
 You are an expert career coach and course advisor with deep knowledge of LinkedIn Learning content.
 
 Generate a highly specific and actionable learning roadmap for someone who wants to become a **${goal}**. They are currently at a **${level}** level and aim to achieve this goal in **${timeline} days**.
+
+${
+  customPrompt
+    ? `Here is some additional context from the user: "${customPrompt}". Please incorporate this into the roadmap.`
+    : ''
+}
 
 **Important Instructions:**
 - Break the roadmap into 3-5 clearly labeled **Phases**.

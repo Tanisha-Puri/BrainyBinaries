@@ -176,7 +176,7 @@ const savedProgress = progressResponse.data.progress || {};
       console.error('Error saving progress before navigating back:', err);
     } finally {
       setSaving(false);
-      navigate(-1);
+      navigate("/user-dashboard");
     }
   }}
 >
