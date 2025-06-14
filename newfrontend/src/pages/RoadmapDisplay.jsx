@@ -71,6 +71,7 @@ function RoadmapDisplay() {
 
       {roadmapText && (
         <>
+        <div className="center-wrapper">
           <div className="button-group">
             <button
               onClick={() => navigate('/start-roadmap', { state: { roadmap: roadmapText, goalId } })}
@@ -78,6 +79,7 @@ function RoadmapDisplay() {
             >
               Start Roadmap
             </button>
+          </div>
           </div>
 
           {/* ✅ NEW: Feedback and refine option */}

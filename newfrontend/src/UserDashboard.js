@@ -81,11 +81,15 @@ function UserDashboard() {
   return (
     <div className="UserDashboard">
       <header>
-        <h1>User Dashboard</h1>
+        {/* <h1>User Dashboard</h1> */}
       </header>
       <main>
         <section className="roadmap-section">
-          <h2>Your Roadmaps</h2>
+         <h2 className="dashboard-heading"> <img 
+    src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" 
+    alt="LinkedIn"
+    className="linkedin-icon"
+  />User Dashboard</h2>
           {roadmap.length === 0 && <p>No roadmaps found.</p>}
           {roadmap.map((rmap) => (
             <div key={rmap.goalId} className="roadmap-card">
@@ -94,7 +98,7 @@ function UserDashboard() {
               <div className="progress-bar-bg">
                 <div className="progress-bar-fill" style={{ width: `${rmap.percentage}%` }} />
               </div>
-              <Link to="/start-roadmap" state={{ goalId: rmap.goalId }} className="resume-button">
+              {/* <Link to="/start-roadmap" state={{ goalId: rmap.goalId }} className="resume-button">
                 Continue Roadmap →
               </Link>
               <Link
@@ -103,7 +107,22 @@ function UserDashboard() {
                 className="edit-button"
               >
                 View Full Roadmap
+              </Link>  */}
+              <Link
+                to="/start-roadmap"
+                state={{ goalId: rmap.goalId }}
+                className="continue-button"
+              >
+                Continue Roadmap →
               </Link>
+              <Link
+                to="/roadmap-display"
+                state={{ goalId: rmap.goalId }}
+                className="view-button"
+              >
+                View Full Roadmap
+              </Link>
+
 
             </div>
           ))}
@@ -111,7 +130,6 @@ function UserDashboard() {
         <section className="profile-section">
           <h3>{user?.name || 'User'}</h3>
           <p>Roadmaps Started: {user?.roadmapsStarted || 0}</p>
-          <p>Interests Added: {user?.interestsAdded || 0}</p>
         </section>
       </main>
     </div>
