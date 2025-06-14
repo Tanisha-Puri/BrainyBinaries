@@ -169,16 +169,21 @@ app.patch("/api/roadmap/:goalId/update", async (req, res) => {
 });
 
 app.post("/api/match", async (req, res) => {
-  const { userText, type } = req.body;
+  const { userText, type, userPrograms = [] } = req.body;
+
+  if (!userText || !type) {
+    return res.status(400).json({ error: "Missing required fields: userText or type" });
+  }
 
   try {
-    const results = await findMatches(userText, type);
+    const results = await findMatches(userText, type, userPrograms);
     res.json(results);
   } catch (err) {
     console.error("❌ Error matching profiles:", err);
     res.status(500).send("Error matching profiles");
   }
 });
+
 
 
 
