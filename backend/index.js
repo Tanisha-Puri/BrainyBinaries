@@ -180,6 +180,25 @@ app.post("/api/match", async (req, res) => {
   }
 });
 
+app.delete("/api/user-goal/:goalId", async (req, res) => {
+  const { goalId } = req.params;
+
+  try {
+    const deletedGoal = await UserGoal.findByIdAndDelete(goalId);
+    const deletedRoadmap = await Roadmap.findOneAndDelete({ goalId });
+
+    if (!deletedGoal) {
+      return res.status(404).json({ error: "Goal not found" });
+    }
+
+    res.status(200).json({ message: "Goal and roadmap deleted successfully" });
+  } catch (err) {
+    console.error("❌ Error deleting goal:", err);
+    res.status(500).json({ error: "Failed to delete goal" });
+  }
+});
+
+
 
 
 

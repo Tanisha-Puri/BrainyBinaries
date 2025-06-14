@@ -20,7 +20,7 @@
   margin: 0 0 20px;
   letter-spacing: 1px;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-  background: linear-gradient(90deg, #000000, #7d8385);
+  background: black;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: flex;
@@ -34,7 +34,6 @@
   height: 36px;
 }
 
-
 .UserDashboard-main {
   width: 100%;
   max-width: 1200px;
@@ -42,11 +41,12 @@
   flex-direction: row;
   gap: 30px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .roadmap-section {
   flex: 1;
-  min-width: 700px;
+  min-width: 320px;
   max-width: 1100px;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(20px);
@@ -63,59 +63,107 @@
   margin-bottom: 15px;
 }
 
-.roadmap-graph {
-  height: 500px;
-  position: relative;
+.roadmap-card {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+  padding: 24px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  transition: transform 0.3s ease;
+  width: 90%;
+  max-width: 800px;
 }
 
-.roadmap-svg {
-  width: 100%;
-  height: 100%;
-}
-
-.roadmap-markdown {
-  background: #f9f9f9;
-  padding: 1rem;
-  border-radius: 8px;
-  line-height: 1.6;
-}
-
-.roadmap-markdown h2,
-.roadmap-markdown h3 {
-  color: #333;
-  margin-top: 1rem;
-}
-
-.roadmap-markdown ul {
-  padding-left: 1.5rem;
-}
-
-.roadmap-markdown li {
-  margin-bottom: 0.5rem;
-}
-
-.roadmap-markdown strong {
-  color: #007acc;
-}
-
-
-.info-section {
-  flex: 1;
-  min-width: 300px;
+/* New header flex container to hold goal title and delete button */
+.roadmap-card-header {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.roadmap-card:hover {
+  transform: translateY(-4px);
+}
+
+.roadmap-card h3 {
+  font-size: 1.25rem;
+  color: #222;
+  margin: 0; /* Remove bottom margin because handled by header */
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 10px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  margin: 8px 0 16px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #02c8f5, #007bff);
+  transition: width 0.4s ease;
+  border-radius: 5px;
+}
+
+.continue-button,
+.view-button,
+.delete-button {
+  display: inline-block;
+  margin: 6px 10px 0 0;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.continue-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.continue-button:hover {
+  background-color: #0056b3;
+}
+
+.view-button {
+  background-color: rgba(0, 123, 255, 0.1);
+  color: #007bff;
+}
+
+.view-button:hover {
+  background-color: rgba(0, 123, 255, 0.2);
+}
+
+.delete-button {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+  border: 1px solid #dc3545;
+  padding: 6px 14px; /* Adjust padding for inline button */
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.delete-button:hover {
+  background-color: rgba(220, 53, 69, 0.2);
 }
 
 .profile-section {
-  min-width: 700px;
+  align-self: flex-start;
+  min-width: 320px;
   max-width: 1100px;
   background: rgba(240, 248, 255, 0.85);
   padding: 24px;
   border-radius: 20px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   text-align: left;
-  font-family: 'Segoe UI', sans-serif;
   border: 1px solid #dbeafe;
   color: #1f2937;
   backdrop-filter: blur(6px);
@@ -140,9 +188,9 @@
 
 .profile-section h3::before {
   content: "👤";
-  display: inline-block;
   margin-right: 12px;
   font-size: 1.5rem;
+  background: #3b82f6;
   color: white;
   border-radius: 50%;
   width: 36px;
@@ -170,6 +218,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .profile-section p span {
@@ -182,148 +231,25 @@
   box-shadow: 0 1px 3px rgba(37, 99, 235, 0.3);
 }
 
-
-
-.node-details {
-  background: white;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  text-align: left;
-}
-
-.node-details h3 {
-  font-size: 1.3rem;
-  color: #333;
-  margin: 0 0 10px;
-}
-
-.node-details p {
-  font-size: 1rem;
-  color: #666;
-  margin: 5px 0;
-}
-
-.node-details a {
-  color: #007bff;
-  text-decoration: none;
-}
-
-.node-details a:hover {
-  text-decoration: underline;
-}
-
-.motivation-section {
-  background: white;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.motivation-section p {
-  font-size: 1rem;
-  color: #333;
-  margin: 0;
-  font-style: italic;
-}
-
-.action-section {
-  margin-top: 20px;
-}
-
-.action-button {
-  background-color: #007bff;
-  color: white;
-  padding: 15px 30px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 1.1rem;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
-}
-
-.action-button:hover {
-  background-color: #0056b3;
-}
-
-.UserDashboard-main p {
-  font-size: 1.2rem;
-  color: #333;
-}
-
 .error {
   color: #dc3545;
   font-weight: 500;
+  padding: 12px;
+  background-color: rgba(220, 53, 69, 0.1);
+  border: 1px solid #dc3545;
+  border-radius: 8px;
+  margin-top: 20px;
 }
 
-.roadmap-card {
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  padding: 24px;
-  border-radius: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  text-align: left;
-  position: relative;
-  transition: transform 0.3s ease;
-  width: 90%;
-  max-width: 800px;
-}
+@media (max-width: 768px) {
+  .UserDashboard-main {
+    flex-direction: column;
+    gap: 20px;
+  }
 
-.roadmap-card h3 {
-  font-size: 1.25rem;
-  color: #222;
-  margin-bottom: 8px;
-}
-
-.roadmap-card:hover {
-  transform: translateY(-4px);
-}
-
-.progress-bar-bg {
-  width: 100%;
-  height: 10px;
-  background-color: #e0e0e0;
-  border-radius: 5px;
-  margin: 8px 0 16px;
-  overflow: hidden;
-}
-
-.progress-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #02c8f5, #007bff);
-  transition: width 0.4s ease;
-  border-radius: 5px;
-}
-
-.continue-button,
-.view-button {
-  display: inline-block;
-  margin-right: 10px;
-  padding: 10px 20px;
-  border-radius: 999px;
-  font-weight: bold;
-  text-decoration: none;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-}
-
-.continue-button {
-  background-color: #007bff;
-  color: white;
-}
-
-.continue-button:hover {
-  background-color: #0056b3;
-}
-
-.view-button {
-  background-color: rgba(0, 123, 255, 0.1);
-  color: #007bff;
-}
-
-.view-button:hover {
-  background-color: rgba(0, 123, 255, 0.2);
+  .roadmap-section,
+  .profile-section {
+    min-width: 90%;
+    padding: 20px;
+  }
 }

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import ReactMarkdown from 'react-markdown';
 import './UserDashboard.css';
 
 function UserDashboard() {
@@ -25,14 +24,12 @@ function UserDashboard() {
 
         const goalsWithData = await Promise.all(
           goals.map(async (goal) => {
-            console.log('Goal from API:', goal);
             const [roadmapRes, progressRes] = await Promise.all([
               axios.get(`http://localhost:5000/api/generate-roadmap/${goal._id}`),
               axios.get(`http://localhost:5000/api/user-goal/${goal._id}/progress`),
             ]);
             const markdown = roadmapRes.data?.roadmap || '';
 
-            // parse steps (numbered list with bold titles)
             const regex = /\d+\.\s\*\*(.*?)\*\*\s*:?([\s\S]*?)(?=\n\d+\.|\n🎯|\n---|$)/g;
             const matches = [...markdown.matchAll(regex)];
 
@@ -49,7 +46,7 @@ function UserDashboard() {
 
             return {
               goalId: goal._id,
-              goalTitle: goal.goal && goal.goal.trim() !== '' ? goal.goal : 'Untitled Goal',
+              goalTitle: goal.goal?.trim() || 'Untitled Goal',
               steps,
               progress,
               percentage,
@@ -57,9 +54,13 @@ function UserDashboard() {
           })
         );
 
+        const completed = goalsWithData.filter(g => g.percentage === 100).length;
+        const started = goalsWithData.filter(g => g.percentage >= 0 && g.percentage < 100).length;
+
         setUser({
           name: 'User',
-          roadmapsStarted: goals.length,
+          roadmapsStarted: started,
+          roadmapsCompleted: completed,
           interestsAdded: 1,
         });
 
@@ -75,39 +76,74 @@ function UserDashboard() {
     fetchData();
   }, []);
 
+  const handleDelete = async (goalId) => {
+  const confirmDelete = window.confirm("Are you sure you want to delete this roadmap?");
+  if (!confirmDelete) return;
+
+  try {
+    await axios.delete(`http://localhost:5000/api/user-goal/${goalId}`);
+    setRoadmap(prev => {
+      const updatedRoadmaps = prev.filter(r => r.goalId !== goalId);
+
+      // Recalculate counts
+      const completed = updatedRoadmaps.filter(g => g.percentage === 100).length;
+      const started = updatedRoadmaps.filter(g => g.percentage >= 0 && g.percentage < 100).length;
+
+      // Update user stats
+      setUser(userPrev => ({
+        ...userPrev,
+        roadmapsStarted: started,
+        roadmapsCompleted: completed,
+      }));
+
+      return updatedRoadmaps;
+    });
+  } catch (err) {
+    console.error("Error deleting roadmap:", err);
+    alert("Failed to delete roadmap.");
+  }
+};
+
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p className="error">{error}</p>;
 
   return (
     <div className="UserDashboard">
-      <header>
-        {/* <h1>User Dashboard</h1> */}
+      <header className="UserDashboard-header">
+        <h2 className="dashboard-heading">
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg"
+            alt="LinkedIn"
+            className="linkedin-icon"
+          />
+          User Dashboard
+        </h2>
       </header>
-      <main>
+
+      <main className="UserDashboard-main">
         <section className="roadmap-section">
-         <h2 className="dashboard-heading"> <img 
-    src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" 
-    alt="LinkedIn"
-    className="linkedin-icon"
-  />User Dashboard</h2>
           {roadmap.length === 0 && <p>No roadmaps found.</p>}
+
           {roadmap.map((rmap) => (
             <div key={rmap.goalId} className="roadmap-card">
-              <h3>{rmap.goalTitle}</h3>
+              <div className="roadmap-card-header">
+                <h3>{rmap.goalTitle}</h3>
+                <button
+                  className="delete-button"
+                  title="Delete Roadmap"
+                  onClick={() => handleDelete(rmap.goalId)}
+                >
+                  Delete🗑️
+                </button>
+              </div>
               <p>{rmap.percentage}% completed</p>
               <div className="progress-bar-bg">
-                <div className="progress-bar-fill" style={{ width: `${rmap.percentage}%` }} />
+                <div
+                  className="progress-bar-fill"
+                  style={{ width: `${rmap.percentage}%` }}
+                />
               </div>
-              {/* <Link to="/start-roadmap" state={{ goalId: rmap.goalId }} className="resume-button">
-                Continue Roadmap →
-              </Link>
-              <Link
-                to="/roadmap-display"
-                state={{ goalId: rmap.goalId }}
-                className="edit-button"
-              >
-                View Full Roadmap
-              </Link>  */}
               <Link
                 to="/start-roadmap"
                 state={{ goalId: rmap.goalId }}
@@ -122,14 +158,18 @@ function UserDashboard() {
               >
                 View Full Roadmap
               </Link>
-
-
             </div>
           ))}
         </section>
+
         <section className="profile-section">
           <h3>{user?.name || 'User'}</h3>
-          <p>Roadmaps Started: {user?.roadmapsStarted || 0}</p>
+          <p>
+            Roadmaps Started: <span>{user?.roadmapsStarted || 0}</span>
+          </p>
+          <p>
+            Roadmaps Completed: <span>{user?.roadmapsCompleted || 0}</span>
+          </p>
         </section>
       </main>
     </div>

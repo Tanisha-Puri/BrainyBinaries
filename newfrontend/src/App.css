@@ -52,7 +52,7 @@ html, body {
 }
 html, body, #root, .App {
   height: 100%;
-  background-color: var(--linkedin-bg);
+  background: linear-gradient(135deg, #b7dcf8 0%, #c3e0f7 100%);
   font-family: var(--font);
   margin: 0;
   padding: 0;
