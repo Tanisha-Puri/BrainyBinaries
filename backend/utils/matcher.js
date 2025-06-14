@@ -1,6 +1,9 @@
 const { generateEmbedding } = require("./embedding");
 const fs = require("fs");
 const path = require("path");
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
 
 const profiles = JSON.parse(
   fs.readFileSync(path.join(__dirname, "../data/mockProfiles.json"), "utf-8")
@@ -68,53 +71,40 @@ function getMatchingReasons(profile, inputText, role, userPrograms) {
 
 const axios = require("axios");
 
+
 async function rerankWithLLM(userText, matches) {
   let prompt = `The user asked: "${userText}". Rank the following profiles in order of best match:\n\n`;
   matches.forEach(({ profile }, i) => {
     prompt += `${i + 1}. ${profile.name}: ${profile.headline}, Skills: ${profile.skills.join(", ")}\n`;
   });
 
-  // Call your Gemini or GPT reranking endpoint here:
-  const apiKey = process.env.GEMINI_API_KEY; // or your LLM API key
   try {
-    const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1beta/models/chat-bison-001:generateMessage?key=${apiKey}`,
-      {
-        prompt: {
-          messages: [
-            { role: "system", content: "You are a helpful assistant that ranks profiles." },
-            { role: "user", content: prompt }
-          ],
-        },
-        temperature: 0.3,
-        candidateCount: 1
-      }
-    );
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // or "chat-bison-001" if you're using PaLM
+    const chat = model.startChat(); // this is required for chat-based messages
 
-    // Extract the ranked list from the LLM response text:
-    const rankingText = response.data.candidates[0].content;
+    const result = await chat.sendMessage(prompt); // ✅ correct function
+    const response = await result.response;
+    const rankingText = response.text(); // ✅ use .text() to get output
 
-    // Parse rankingText (assuming LLM returns profile names in order):
-    // Example expected output:
-    // "1. Profile B\n2. Profile A\n3. Profile C"
+    // Parse ranked names
     const rankedNames = rankingText
       .split("\n")
       .map(line => line.trim().replace(/^\d+\.\s*/, ""))
       .filter(name => name.length > 0);
 
-    // Reorder matches array according to rankedNames:
     const rankedMatches = rankedNames
       .map(name => matches.find(m => m.profile.name === name))
       .filter(Boolean);
 
     return rankedMatches.slice(0, 5);
-
   } catch (error) {
-    console.error("LLM reranking error:", error.response?.data || error.message);
-    // fallback to original ordering if LLM call fails
+    console.error("LLM reranking error:", error.message);
     return matches.slice(0, 5);
   }
 }
+
+
+
 
 
 const findMatches = async (inputText, role, userPrograms = []) => {
@@ -160,7 +150,6 @@ const findMatches = async (inputText, role, userPrograms = []) => {
 
   return matches;
 };
-
 
 
 
