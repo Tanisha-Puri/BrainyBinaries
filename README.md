@@ -37,7 +37,7 @@ It is a Generative AI-powered platform that creates **personalized learning road
   - **Find a Mentor**
   - **Find a Peer**
 - Get matched with **mock user profiles** generated based on your needs.
-- Improved suggestions with Linkedin verified **Open to collaboration/Open to mentorship** badges.
+- Improved suggestions with Linkedin verified **Open to collaboration/Open to mentorship** badges and LLM ranking.
 
 ---
 
@@ -46,5 +46,5 @@ It is a Generative AI-powered platform that creates **personalized learning road
 - **Frontend**: Reactjs, React Router, React Markdown
 - **Backend**: Node.js, Express
 - **Database**: MongoDB
-- **AI Integration**: GeminiAI (or other LLM) for roadmap generation and refinement and peer-pod embeddings generation and improving matching logic.
+- **AI Integration**: GeminiAI API for roadmap generation, refinement and peer-pod embeddings generation and improving matching logic by ranking profiles.
 - **Styling**: CSS Modules
