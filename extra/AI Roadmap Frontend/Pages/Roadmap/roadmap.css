@@ -1,0 +1,211 @@
+/* Reset and basic styles */
+body, h1, h2, p, ul, li, input, button, textarea, a {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: linear-gradient(to right, #f8f8f8, #e6e6e6);
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+/* Top Navigation */
+.top-nav {
+  background-color: #0a66c2;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 8px 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.top-nav .logo {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+}
+
+.top-nav .logo i {
+  font-size: 24px;
+  margin-right: 8px;
+}
+
+.top-nav .logo span {
+  font-weight: bold;
+}
+
+/* Container */
+.container {
+  display: flex;
+  margin-top: 20px;
+  padding: 0 20px;
+  gap: 20px;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 200px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  height: fit-content;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  margin-bottom: 15px;
+  cursor: pointer;
+  color: #333;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar li:hover {
+  background-color: #f0f0f0;
+}
+
+.sidebar li.active {
+  background-color: #0a66c2;
+  color: white;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.main-header h1 {
+  font-size: 32px;
+  font-weight: bold;
+  color: black;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.form-pod-button {
+  background-color: #0a66c2;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.form-pod-button:hover {
+  background-color: #084d9c;
+}
+
+.description {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+/* Roadmap Generator */
+.roadmap-generator {
+  background-color: #fefefe;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.step {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.step:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.step h2 {
+  font-size: 22px;
+  margin-bottom: 15px;
+  color: #333;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.step label {
+  font-size: 14px;
+  color: #333;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.step input[type="text"],
+.step input[type="date"] {
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  display: block;
+  margin-bottom: 10px;
+  width: 100%;
+  max-width: 400px;
+  font-size: 14px;
+  background-color: #f9f9f9;
+}
+
+.generate-button {
+  background-color: #0a66c2;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 25px;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+  margin-top: 20px;
+}
+
+.generate-button:hover {
+  background-color: #084d9c;
+}
+
+.enter-goals-button {
+  background-color: #0a66c2;
+  color: white;
+  text-decoration: none;
+  padding: 10px 25px;
+  border-radius: 25px;
+  font-size: 15px;
+  display: inline-block;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+.enter-goals-button:hover {
+  background-color: #084d9c;
+}
+/* Remove underline from sidebar links */
+.sidebar a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
