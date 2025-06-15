@@ -42,12 +42,17 @@ const initializeProfileEmbeddings = async () => {
   console.log("Profile embeddings initialized");
 };
 
+function fuzzyIncludes(input, keyword) {
+  const pattern = new RegExp(`\\b${keyword.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")}\\b`, "i");
+  return pattern.test(input);
+}
+
 
 function getMatchingReasons(profile, inputText, role, userPrograms) {
   const reasons = [];
 
   profile.skills.forEach(skill => {
-    if (inputText.toLowerCase().includes(skill.toLowerCase())) {
+    if (fuzzyIncludes(inputText, skill)) {
       reasons.push(`Experience with ${skill}`);
     }
   });
@@ -75,8 +80,12 @@ const axios = require("axios");
 async function rerankWithLLM(userText, matches) {
   let prompt = `The user asked: "${userText}". Rank the following profiles in order of best match:\n\n`;
   matches.forEach(({ profile }, i) => {
-    prompt += `${i + 1}. ${profile.name}: ${profile.headline}, Skills: ${profile.skills.join(", ")}\n`;
-  });
+  prompt += `${i + 1}. ${profile.name}\n`;
+  prompt += `   Headline: ${profile.headline}\n`;
+  prompt += `   Skills: ${profile.skills.join(", ")}\n`;
+  prompt += `   About: ${profile.about}\n`;
+  prompt += `   Experience: ${profile.experience.map(e => `${e.title} at ${e.company}`).join("; ")}\n\n`;
+});
 
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // or "chat-bison-001" if you're using PaLM
