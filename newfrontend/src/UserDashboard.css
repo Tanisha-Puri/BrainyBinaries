@@ -14,7 +14,7 @@
 }
 
 .dashboard-heading {
-  font-size: 3rem;
+  font-size: 2.3rem;
   color: #1a1a1a;
   font-weight: 700;
   margin: 0 0 20px;
@@ -106,7 +106,7 @@
 
 .progress-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #02c8f5, #007bff);
+  background: linear-gradient(90deg, #b2daf8, #007bff);
   transition: width 0.4s ease;
   border-radius: 5px;
 }
@@ -191,7 +191,7 @@
   content: "👤";
   margin-right: 12px;
   font-size: 1.5rem;
-  background: #3b82f6;
+  /* background: #3b82f6; */
   color: white;
   border-radius: 50%;
   width: 36px;
