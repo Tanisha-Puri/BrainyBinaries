@@ -69,6 +69,11 @@ const savedProgress = progressResponse.data.progress || {};
         setSteps(extractedSteps);
         setProgress(initialProgress);
         setLoading(false);
+        const firstIncompleteIndex = extractedSteps.findIndex(
+        (step) => !initialProgress[step.id]
+      );
+      setStepIndex(firstIncompleteIndex === -1 ? 0 : firstIncompleteIndex);
+      setLoading(false);
       } catch (error) {
         console.error('Failed to load roadmap:', error);
         alert('Unable to load roadmap. Redirecting...');

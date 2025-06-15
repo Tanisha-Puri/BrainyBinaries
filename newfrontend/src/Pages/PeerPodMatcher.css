@@ -278,3 +278,10 @@ html, body {
   font-weight: 600;
   font-size: 1.15rem;
 }
+
+.loading {
+  font-size: 1.2rem;
+  color: #444;
+  text-align: center;
+  margin: 2rem 0;
+}

@@ -5,9 +5,12 @@ export default function PeerPodMatcher() {
   const [searchInput, setSearchInput] = useState('');
   const [type, setType] = useState('');
   const [profiles, setProfiles] = useState([]);
+  const [loading, setLoading] = useState(false);
+
 
   const handleSearch = async () => {
   try {
+    setLoading(true);
     document.querySelector('.matcher-container')?.scrollIntoView({ behavior: 'smooth' });
 
     const response = await fetch("http://localhost:5000/api/match", {
@@ -31,6 +34,10 @@ export default function PeerPodMatcher() {
     setProfiles(extractedProfiles);
   } catch (error) {
     console.error("Failed to fetch profiles:", error);
+    setProfiles([]);
+  }
+  finally {
+    setLoading(false); // Stop loading
   }
 };
 
@@ -75,7 +82,9 @@ export default function PeerPodMatcher() {
 
 
       <div className="profile-grid">
-        {profiles.length > 0 ? (
+        {loading ? (
+    <p className="loading">Loading...</p>
+  ) : profiles.length > 0 ? (
           profiles.map((profile) => (
             <div key={profile.userId} className="profile-card">
               <h2>{profile.name}</h2>
