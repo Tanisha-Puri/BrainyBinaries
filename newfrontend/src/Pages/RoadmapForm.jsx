@@ -69,13 +69,15 @@ function RoadmapForm() {
               />
 
               <input
-                type="text"
-                placeholder="Timeline (e.g. 3 months)"
-                value={goal.timeline}
-                onChange={(e) => handleChange('timeline', e.target.value)}
-                className="input-field"
-                required
-              />
+  type="text"
+  placeholder="Timeline (e.g. '3 months', '6 weeks', '20 days', etc.)"
+  value={goal.timeline}
+  onChange={(e) => handleChange('timeline', e.target.value)}
+  className="input-field"
+  required
+  pattern="^[0-9]+ (day|days|week|weeks|month|months|year|years)$"
+/>
+
               <select
                 value={goal.level}
                 onChange={(e) => handleChange('level', e.target.value)}

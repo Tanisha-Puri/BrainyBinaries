@@ -7,7 +7,7 @@ const generateRoadmap = async (goal, level, timeline, customPrompt = '') => {
   const prompt = `
 You are an expert career coach and course advisor with deep knowledge of LinkedIn Learning content.
 
-Generate a highly specific and actionable learning roadmap for someone who wants to become a **${goal}**. They are currently at a **${level}** level and aim to achieve this goal in **${timeline} days**.
+Generate a highly specific and actionable learning roadmap for someone who wants to become a **${goal}**. They are currently at a **${level}** level and aim to achieve this goal in **${timeline}**.
 
 ${
   customPrompt
