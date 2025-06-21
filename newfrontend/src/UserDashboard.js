@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './UserDashboard.css';
+const backendURL = process.env.REACT_APP_BACKEND_URL;
 
 function UserDashboard() {
   const [user, setUser] = useState(null);
@@ -13,7 +14,7 @@ function UserDashboard() {
     async function fetchData() {
       try {
         setLoading(true);
-        const goalResponse = await axios.get('http://localhost:5000/api/user-goal');
+        const goalResponse = await axios.get(`${backendURL}/api/user-goal`);
         const goals = goalResponse.data;
 
         if (goals.length === 0) {
@@ -25,8 +26,8 @@ function UserDashboard() {
         const goalsWithData = await Promise.all(
           goals.map(async (goal) => {
             const [roadmapRes, progressRes] = await Promise.all([
-              axios.get(`http://localhost:5000/api/generate-roadmap/${goal._id}`),
-              axios.get(`http://localhost:5000/api/user-goal/${goal._id}/progress`),
+              axios.get(`${backendURL}/api/generate-roadmap/${goal._id}`),
+              axios.get(`${backendURL}/api/user-goal/${goal._id}/progress`),
             ]);
             const markdown = roadmapRes.data?.roadmap || '';
 
@@ -81,7 +82,7 @@ function UserDashboard() {
   if (!confirmDelete) return;
 
   try {
-    await axios.delete(`http://localhost:5000/api/user-goal/${goalId}`);
+    await axios.delete(`${backendURL}/api/user-goal/${goalId}`);
     setRoadmap(prev => {
       const updatedRoadmaps = prev.filter(r => r.goalId !== goalId);
 

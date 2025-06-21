@@ -4,6 +4,7 @@ import remarkGfm from 'remark-gfm';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/StartRoadmap.css';
+const backendURL = process.env.REACT_APP_BACKEND_URL;
 
 function StartRoadmap() {
   const [steps, setSteps] = useState([]);
@@ -27,7 +28,7 @@ function StartRoadmap() {
           return;
         }
 
-        const response = await axios.get(`http://localhost:5000/api/generate-roadmap/${goalId}`);
+        const response = await axios.get(`${backendURL}/api/generate-roadmap/${goalId}`);
         const markdown = response.data?.roadmap;
 
         if (!markdown) {
@@ -57,7 +58,7 @@ function StartRoadmap() {
         });
 
         const progressResponse = await axios.get(
-  `http://localhost:5000/api/user-goal/${goalId}/progress`
+  `${backendURL}/api/user-goal/${goalId}/progress`
 );
 const savedProgress = progressResponse.data.progress || {};
 
@@ -96,9 +97,9 @@ const savedProgress = progressResponse.data.progress || {};
 
   const goalId = location.state?.goalId || sessionStorage.getItem('goalId');
   try {
-    await axios.patch(`http://localhost:5000/api/user-goal/${goalId}/progress`, {
-      progress: updatedProgress,
-    });
+    await axios.patch(`${backendURL}/api/user-goal/${goalId}/progress`, {
+  progress: updatedProgress,
+});
   } catch (err) {
     console.error("Error saving progress:", err);
   }
@@ -174,9 +175,9 @@ const savedProgress = progressResponse.data.progress || {};
     setSaving(true);
     const goalId = location.state?.goalId || sessionStorage.getItem('goalId');
     try {
-      await axios.patch(`http://localhost:5000/api/user-goal/${goalId}/progress`, {
-        progress,
-      });
+      await axios.patch(`${backendURL}/api/user-goal/${goalId}/progress`, {
+  progress,
+});
     } catch (err) {
       console.error('Error saving progress before navigating back:', err);
     } finally {

@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/RoadmapDisplay.css';
+const backendURL = process.env.REACT_APP_BACKEND_URL;
 
 function RoadmapDisplay() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ function RoadmapDisplay() {
 
     const fetchRoadmap = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/generate-roadmap/${goalId}`);
+        const response = await axios.get(`${backendURL}/api/generate-roadmap/${goalId}`);
         setRoadmapText(response.data.roadmap);
       } catch (error) {
         console.error("Error fetching roadmap:", error);
@@ -40,9 +41,9 @@ function RoadmapDisplay() {
 
     setRefining(true);
     try {
-      const response = await axios.patch(`http://localhost:5000/api/roadmap/${goalId}/update`, {
-        feedback,
-      });
+      const response = await axios.patch(`${backendURL}/api/roadmap/${goalId}/update`, {
+  feedback,
+});
       setRoadmapText(response.data.roadmap);
       setFeedback('');
     } catch (error) {

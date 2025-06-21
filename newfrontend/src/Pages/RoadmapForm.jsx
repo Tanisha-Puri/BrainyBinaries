@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import LoadingSpinner from '../components/LoadingSpinner';
 import '../styles/RoadmapForm.css';
+const backendURL = process.env.REACT_APP_BACKEND_URL;
 
 function RoadmapForm() {
   const [goal, setGoal] = useState({ goal: '', timeline: '', level: '', customPrompt: '' });
@@ -19,7 +20,7 @@ function RoadmapForm() {
 
     try {
       // Step 1: Save user goal
-      const saveRes = await axios.post('http://localhost:5000/api/user-goal', goal);
+      const saveRes = await axios.post(`${backendURL}/api/user-goal`, goal);
       console.log("Full backend response:", saveRes.data);
     console.log("Keys in response object:", Object.keys(saveRes.data));
       if (!saveRes.data._id) {

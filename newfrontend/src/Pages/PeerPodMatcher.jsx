@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './PeerPodMatcher.css';
+const backendURL = process.env.REACT_APP_BACKEND_URL;
 
 export default function PeerPodMatcher() {
   const [searchInput, setSearchInput] = useState('');
@@ -13,7 +14,7 @@ export default function PeerPodMatcher() {
     setLoading(true);
     document.querySelector('.matcher-container')?.scrollIntoView({ behavior: 'smooth' });
 
-    const response = await fetch("http://localhost:5000/api/match", {
+    const response = await fetch(`${backendURL}/api/match`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
